@@ -87,6 +87,7 @@ export default {
       'process.env.snippetsEndpoint': JSON.stringify(
         process.env.SNIPPETS_ENDPOINT ?? 'https://snippets.ranna.zekro.de'
       ),
+      preventAssignment: true,
     }),
   ],
   watch: {

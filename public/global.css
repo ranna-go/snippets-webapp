@@ -66,3 +66,22 @@ button:disabled {
   box-shadow: none;
   cursor: not-allowed;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0 0 0.7em 0;
+}
+
+p {
+  margin: 0 0 1em 0;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 50px;
+}

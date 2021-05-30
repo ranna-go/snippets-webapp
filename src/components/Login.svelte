@@ -58,6 +58,8 @@
 </main>
 
 <style lang="scss">
+  @import '../styles/mixins.scss';
+
   input,
   label,
   button {
@@ -94,7 +96,7 @@
       border-radius: 10px;
       overflow: hidden;
       background-color: #001419;
-      box-shadow: 0px 15px 40px 0 rgba(black, 0.5);
+      @include shadow;
 
       .head {
         display: flex;

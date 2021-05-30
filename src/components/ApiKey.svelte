@@ -7,9 +7,8 @@
   <div class="apikey">
     <h3>API Key</h3>
     <p>
-      You will need this master key to login later. Please store it somewhere
-      save!<br />
-      <strong>This token will not be shown again later!</strong>
+      This key is used to link newly created snippets to your account and also to list and delete created snippets.<br/>
+      You need to input this key in the ranna app settings to link created snippets to this account.
     </p>
     <div class="keybox">
       <input type="password" readonly value={$apiKey} />

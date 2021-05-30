@@ -13,9 +13,7 @@
     </p>
     <div class="keybox">
       <input type="password" readonly value={$apiKey} />
-      <button on:click={() => copyToClipboard($apiKey)}
-        >COPY TO CLIPBOARD</button
-      >
+      <button on:click={() => copyToClipboard($apiKey)}>📋</button>
     </div>
   </div>
 </main>

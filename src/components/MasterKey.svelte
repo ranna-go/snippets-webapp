@@ -8,7 +8,7 @@
     <div class="masterkey">
       <div class="header">
         <h3>Master Key</h3>
-        <button on:click={() => masterKey.set('')}>CLOSE</button>
+        <button on:click={() => masterKey.set('')}>❌</button>
       </div>
       <p>
         You will need this master key to login later. Please store it somewhere
@@ -17,9 +17,7 @@
       </p>
       <div class="keybox">
         <input type="password" readonly value={$masterKey} />
-        <button on:click={() => copyToClipboard($masterKey)}
-          >COPY TO CLIPBOARD</button
-        >
+        <button on:click={() => copyToClipboard($masterKey)}>📋</button>
       </div>
     </div>
   {/if}

@@ -87,6 +87,9 @@ export default {
       'process.env.snippetsEndpoint': JSON.stringify(
         process.env.SNIPPETS_ENDPOINT ?? 'https://snippets.ranna.zekro.de'
       ),
+      'process.env.rannaAppLocation': JSON.stringify(
+        process.env.RANNA_APP_LOCATION ?? 'https://app.ranna.zekro.de'
+      ),
       preventAssignment: true,
     }),
   ],

@@ -1,17 +1,27 @@
 <script lang="ts">
   import { client } from '../client';
   import Snippet from '../components/Snippet.svelte';
-  import type { Snippet as SnippetModel } from '@ranna-go/ranna-ts';
+  import { APIError, Snippet as SnippetModel } from '@ranna-go/ranna-ts';
 
   import ApiKey from './ApiKey.svelte';
   import MasterKey from './MasterKey.svelte';
+  import { apiKey } from '../store';
 
-  let linksPromise: Promise<SnippetModel[]>;
+  let snippets: SnippetModel[] = null;
 
   fetchSnippets();
 
-  function fetchSnippets() {
-    linksPromise = client.list();
+  async function fetchSnippets() {
+    try {
+      snippets = await client.list();
+    } catch (e) {
+      if (e instanceof APIError) {
+        console.log(e.code);
+        if (e.code ?? e.status === 401) {
+          apiKey.set('');
+        }
+      }
+    }
   }
 
   async function onDelete(s: SnippetModel) {
@@ -28,20 +38,16 @@
   <div class="content-wrapper">
     <MasterKey />
     <ApiKey />
-    {#if linksPromise}
-      {#await linksPromise}
-        <p>Fetching snippets ...</p>
-      {:then snippets}
-        <div class="snippets-container">
-          {#each snippets as snippet}
-            <Snippet
-              {snippet}
-              on:delete={() => onDelete(snippet)}
-              on:click={() => onSnippetClick(snippet)}
-            />
-          {/each}
-        </div>
-      {/await}
+    {#if snippets}
+      <div class="snippets-container">
+        {#each snippets as snippet}
+          <Snippet
+            {snippet}
+            on:delete={() => onDelete(snippet)}
+            on:click={() => onSnippetClick(snippet)}
+          />
+        {/each}
+      </div>
     {/if}
   </div>
 </main>

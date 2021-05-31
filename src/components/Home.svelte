@@ -6,6 +6,7 @@
   import ApiKey from './ApiKey.svelte';
   import MasterKey from './MasterKey.svelte';
   import { apiKey } from '../store';
+  import LocalStorageUtil from '../localstorage';
 
   let snippets: SnippetModel[] = null;
 
@@ -13,13 +14,11 @@
 
   async function fetchSnippets() {
     try {
+      client.clientOptions.auth = `bearer ${$apiKey}`;
       snippets = await client.list();
     } catch (e) {
       if (e instanceof APIError) {
-        console.log(e.code);
-        if (e.code ?? e.status === 401) {
-          apiKey.set('');
-        }
+        if (e.code ?? e.status === 401) client.logout();
       }
     }
   }

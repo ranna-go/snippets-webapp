@@ -8,7 +8,7 @@
     <div class="masterkey">
       <div class="header">
         <h3>Master Key</h3>
-        <button on:click={() => masterKey.set('')}>❌</button>
+        <button title="Hide" on:click={() => masterKey.set('')}>❌</button>
       </div>
       <p>
         You will need this master key to login later. Please store it somewhere
@@ -17,7 +17,10 @@
       </p>
       <div class="keybox">
         <input type="password" readonly value={$masterKey} />
-        <button on:click={() => copyToClipboard($masterKey)}>📋</button>
+        <button
+          title="Copy to clipboard"
+          on:click={() => copyToClipboard($masterKey)}>📋</button
+        >
       </div>
     </div>
   {/if}
@@ -33,11 +36,15 @@
     margin-bottom: 30px;
     @include shadow;
 
+    h3 {
+      margin: 0;
+    }
+
     > .header {
       display: flex;
       justify-content: space-between;
+      margin-bottom: 10px;
     }
-
     > .keybox {
       display: flex;
       white-space: nowrap;

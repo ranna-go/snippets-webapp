@@ -1,10 +1,18 @@
-import { SnippetsClient } from '@ranna-go/ranna-ts';
+import { ClientOptions, SnippetsClient } from '@ranna-go/ranna-ts';
 import LocalStorageUtil from './localstorage';
 import { apiKey } from './store';
 
-export const client = new SnippetsClient(process.env.snippetsEndpoint);
-const key = LocalStorageUtil.get<string>('apikey');
-if (key) {
-  apiKey.set(key);
-  client.clientOptions.auth = 'bearer ' + key;
+export class ClientWrapper extends SnippetsClient {
+  constructor(endpoint: string, options?: ClientOptions) {
+    super(endpoint, options);
+  }
+
+  logout() {
+    apiKey.set('');
+    LocalStorageUtil.del('apikey');
+  }
 }
+
+export const client = new ClientWrapper(process.env.snippetsEndpoint);
+const key = LocalStorageUtil.get<string>('apikey');
+if (key) apiKey.set(key);

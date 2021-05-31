@@ -6,7 +6,7 @@
   import ApiKey from './ApiKey.svelte';
   import MasterKey from './MasterKey.svelte';
   import { apiKey } from '../store';
-  import LocalStorageUtil from '../localstorage';
+  import { showSnackbar } from '../snackbarService';
 
   let snippets: SnippetModel[] = null;
 
@@ -25,7 +25,8 @@
 
   async function onDelete(s: SnippetModel) {
     await client.delete(s.ident);
-    fetchSnippets();
+    snippets = snippets.filter((_s) => _s !== s);
+    showSnackbar(`Snippet '${s.ident}' was deleted.`, 'success', 3500);
   }
 
   function onSnippetClick(s: SnippetModel) {

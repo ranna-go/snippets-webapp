@@ -1,7 +1,9 @@
 <script lang="ts">
+  import { APIError } from '@ranna-go/ranna-ts';
+
   import { client } from '../client';
-  import LocalStorageUtil from '../localstorage';
-  import { masterKey, apiKey } from '../store';
+  import { showSnackbar } from '../snackbarService';
+  import { masterKey } from '../store';
 
   let selected = 0;
 
@@ -10,16 +12,26 @@
   let remember = false;
 
   async function onLogin() {
-    const res = await client.exchangeAPIToken(username, key);
-    apiKey.set(res.token);
-    if (remember) LocalStorageUtil.set('apikey', res.token);
+    try {
+      await client.login(username, key, remember);
+    } catch (e) {
+      let msg = 'Login failed.';
+      if (e instanceof APIError) {
+        if (e.code ?? e.status === 401) msg = 'Invalid username or master key.';
+      }
+      showSnackbar(msg, 'error');
+    }
   }
 
   async function onRegister() {
-    const res = await client.createAccount(username);
-    key = res.masterkey;
-    masterKey.set(res.masterkey);
-    await onLogin();
+    try {
+      const res = await client.createAccount(username);
+      key = res.masterkey;
+      masterKey.set(res.masterkey);
+      await onLogin();
+    } catch (e) {
+      showSnackbar('Invalid username or username already exists.', 'error');
+    }
   }
 </script>
 

@@ -32,6 +32,8 @@ const languageColors = {
   dart: '#00B4AB',
   pascal: '#b0ce4e',
   fpc: '#b0ce4e',
+  kotlin: '#F18E33',
+  'kotlin-script': '#F18E33',
 };
 
 export function languageColor(lang: string): string {

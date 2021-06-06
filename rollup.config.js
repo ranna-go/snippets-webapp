@@ -93,6 +93,10 @@ export default {
       'process.env.rannaAppLocation': JSON.stringify(
         process.env.RANNA_APP_LOCATION ?? 'https://app.ranna.zekro.de'
       ),
+      'process.env.languagesEndpoint': JSON.stringify(
+        process.env.LANGUAGES_ENDPOINT ??
+          'https://languages.ranna.zekro.de/languages.minified.json'
+      ),
       preventAssignment: true,
     }),
   ],

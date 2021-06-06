@@ -11,11 +11,21 @@ export type LanguageMap = { [key: string]: LanguageInfo };
 
 let languageInfo: LanguageMap = {};
 
+const aliasMap: { [key: string]: string } = {
+  'openjdk-11': 'java',
+  deno: 'typescript',
+  mono: 'csharp',
+  'dotnet-script': 'csharp',
+  'kotlin-script': 'kotlin',
+};
+
 (async () => {
   const res = await window.fetch(process.env.languagesEndpoint);
   languageInfo = (await res.json()) as LanguageMap;
 })();
 
 export function languageColor(lang: string): string {
-  return languageInfo[lang.toLowerCase()]?.color ?? '#ffffff';
+  lang = lang.toLowerCase();
+  lang = aliasMap[lang] ?? lang;
+  return languageInfo[lang]?.color ?? '#ffffff';
 }

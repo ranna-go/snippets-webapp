@@ -88,14 +88,14 @@ export default {
     replace({
       'process.env.isProd': JSON.stringify(production),
       'process.env.snippetsEndpoint': JSON.stringify(
-        process.env.SNIPPETS_ENDPOINT ?? 'https://snippets.ranna.zekro.de'
+        process.env.SNIPPETS_ENDPOINT ?? 'https://snippets.ranna.dev'
       ),
       'process.env.rannaAppLocation': JSON.stringify(
-        process.env.RANNA_APP_LOCATION ?? 'https://app.ranna.zekro.de'
+        process.env.RANNA_APP_LOCATION ?? 'https://app.ranna.dev'
       ),
       'process.env.languagesEndpoint': JSON.stringify(
         process.env.LANGUAGES_ENDPOINT ??
-          'https://languages.ranna.zekro.de/languages.minified.json'
+          'https://languages.ranna.dev/languages.minified.json'
       ),
       preventAssignment: true,
     }),

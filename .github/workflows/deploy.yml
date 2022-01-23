@@ -31,6 +31,10 @@ jobs:
 
     - name: 'Build Static Content'
       run: npm run build
+      env:
+        SNIPPETS_ENDPOINT: "https://snippets.ranna.dev"
+        RANNA_APP_LOCATION: "https://app.ranna.dev"
+        LANGUAGES_ENDPOINT: "https://languages.ranna.dev/languages.minified.json"
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3

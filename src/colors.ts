@@ -19,13 +19,17 @@ const aliasMap: { [key: string]: string } = {
   'kotlin-script': 'kotlin',
 };
 
-(async () => {
+async function init() {
   const res = await window.fetch(process.env.languagesEndpoint);
   languageInfo = (await res.json()) as LanguageMap;
-})();
+}
 
 export function languageColor(lang: string): string {
   lang = lang.toLowerCase();
   lang = aliasMap[lang] ?? lang;
   return languageInfo[lang]?.color ?? '#ffffff';
 }
+
+export default {
+  init,
+};

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { client } from '../client';
   import Snippet from '../components/Snippet.svelte';
+  import colors from '../colors';
   import { APIError, Snippet as SnippetModel } from '@ranna-go/ranna-ts';
 
   import ApiKey from './ApiKey.svelte';
@@ -10,9 +11,8 @@
 
   let snippets: SnippetModel[] = null;
 
-  fetchSnippets();
-
   async function fetchSnippets() {
+    await colors.init();
     try {
       client.clientOptions.auth = `bearer ${$apiKey}`;
       snippets = await client.list();
@@ -38,7 +38,9 @@
   <div class="content-wrapper">
     <MasterKey />
     <ApiKey />
-    {#if snippets}
+    {#await fetchSnippets()}
+      <i>Loading ...</i>
+    {:then}
       <div class="snippets-container">
         {#each snippets as snippet}
           <Snippet
@@ -48,7 +50,7 @@
           />
         {/each}
       </div>
-    {/if}
+    {/await}
   </div>
 </main>
 

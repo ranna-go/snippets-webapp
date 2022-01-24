@@ -5,6 +5,7 @@
   import dateformat from 'dateformat';
 
   export let snippet: Snippet;
+  let displayname = snippet.displayname ?? snippet.ident;
 
   const dispatch = createEventDispatcher();
 
@@ -16,12 +17,30 @@
   function onClick() {
     dispatch('click');
   }
+
+  function onInputClick(e: MouseEvent) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
+
+  async function updateTitle() {
+    if (!displayname) {
+      displayname = snippet.ident;
+      return;
+    }
+    dispatch('update', displayname);
+  }
 </script>
 
 <main>
   <div class="container" on:click={onClick}>
     <button class="btn-delete" on:click={onDelete}>🗑</button>
-    <h3>{snippet.ident}</h3>
+    <input
+      class="i-ident"
+      bind:value={displayname}
+      on:click={onInputClick}
+      on:blur={updateTitle}
+    />
     <p class="language">
       <span
         style={`background-color: ${languageColor(snippet.language)}`}
@@ -99,6 +118,12 @@
       font-size: 12px;
       opacity: 0.5;
       margin-bottom: 0px;
+    }
+
+    .i-ident {
+      background-color: transparent;
+      padding: 0;
+      font-size: 1.3em;
     }
   }
 </style>

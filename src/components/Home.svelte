@@ -32,6 +32,21 @@
   function onSnippetClick(s: SnippetModel) {
     window.open(`${process.env.rannaAppLocation}?s=${s.ident}`);
   }
+
+  async function onSnippetUpdate(s: SnippetModel, e: CustomEvent<string>) {
+    s.displayname = e.detail;
+    try {
+      client.update(s);
+      showSnackbar(`Updated title of snippet '${s.ident}'`, 'success', 3500);
+    } catch {
+      s.displayname = null;
+      showSnackbar(
+        `Failed updating title of snippet '${s.ident}'`,
+        'error',
+        3500
+      );
+    }
+  }
 </script>
 
 <main>
@@ -47,6 +62,7 @@
             {snippet}
             on:delete={() => onDelete(snippet)}
             on:click={() => onSnippetClick(snippet)}
+            on:update={(e) => onSnippetUpdate(snippet, e)}
           />
         {/each}
       </div>
